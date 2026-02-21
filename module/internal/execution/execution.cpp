@@ -1,0 +1,100 @@
+﻿#include <internal/globals.hpp>
+#include <internal/execution/execution.hpp>
+#include <internal/roblox/task_scheduler/scheduler.hpp>
+
+class BytecodeEncoder : public Luau::BytecodeEncoder
+{
+    inline void encode(uint32_t* data, size_t count) override
+    {
+        for (auto i = 0; i < count;)
+        {
+            uint8_t Opcode = LUAU_INSN_OP(data[i]);
+            const auto LookupTable = reinterpret_cast<BYTE*>(Offsets::OpcodeLookupTable);
+            uint8_t FinalOpcode = Opcode * 227;
+            FinalOpcode = LookupTable[FinalOpcode];
+
+            data[i] = (FinalOpcode) | (data[i] & ~0xFF);
+            i += Luau::getOpLength(static_cast<LuauOpcode>(Opcode));
+        }
+    }
+};
+
+std::string Execution::CompileScript(std::string Source)
+{
+    auto BytecodeEncoding = BytecodeEncoder();
+    static const char* CommonGlobals[] = { "Game", "Workspace", "game", "plugin", "script", "shared", "workspace", "_G", "_ENV", nullptr };
+
+    Luau::CompileOptions Options;
+    Options.debugLevel = 1;
+    Options.optimizationLevel = 1;
+    Options.mutableGlobals = CommonGlobals;
+    Options.vectorLib = "Vector3";
+    Options.vectorCtor = "new";
+    Options.vectorType = "Vector3";
+
+    return Luau::compile(Source, Options, {}, &BytecodeEncoding);
+}
+
+void Execution::ExecuteScript(lua_State* L, std::string Script)
+{
+    if (Script.empty() || !L)
+        return;
+
+    int OriginalTop = lua_gettop(L);
+    lua_State* ExecutionThread = lua_newthread(L);
+
+    if (!ExecutionThread)
+    {
+        lua_settop(L, OriginalTop);
+        return;
+    }
+
+    lua_pop(L, 1);
+
+    luaL_sandboxthread(ExecutionThread);
+    TaskScheduler::SetThreadCapabilities(ExecutionThread, 8, MaxCapabilities);
+
+    std::string Bytecode = Execution::CompileScript(Script);
+
+    if (Bytecode.empty())
+    {
+        lua_settop(L, OriginalTop);
+        return;
+    }
+
+    if (luau_load(ExecutionThread, "", Bytecode.c_str(), Bytecode.length(), 0) != LUA_OK)
+    {
+        const char* Error = lua_tostring(ExecutionThread, -1);
+        if (Error)
+        {
+            Roblox::Print(3, "%s", Error);
+        }
+        lua_settop(ExecutionThread, 0);
+        lua_settop(L, OriginalTop);
+        return;
+    }
+
+    Closure* Closure = clvalue(luaA_toobject(ExecutionThread, -1));
+    if (Closure && Closure->l.p)
+    {
+        TaskScheduler::SetProtoCapabilities(Closure->l.p, &MaxCapabilities);
+    }
+
+    lua_pushcclosure(ExecutionThread, reinterpret_cast<lua_CFunction>(Roblox::TaskDefer), 0, 0);
+    lua_insert(ExecutionThread, -2);
+
+    if (lua_pcall(ExecutionThread, 1, 0, 0) != LUA_OK)
+    {
+        const char* Error = lua_tostring(ExecutionThread, -1);
+        if (Error)
+        {
+            Roblox::Print(3, "%s", Error);
+        }
+        lua_settop(ExecutionThread, 0);
+        lua_settop(L, OriginalTop);
+        return;
+    }
+
+    lua_settop(ExecutionThread, 0);
+    lua_settop(L, OriginalTop);
+}
