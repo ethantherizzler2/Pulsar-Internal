@@ -221,10 +221,10 @@ namespace Script
 
     int getcallingscript(lua_State* L) {
         uintptr_t userdata = (uintptr_t)L->userdata;
-        __int64 scriptptr = *reinterpret_cast<uintptr_t*>(userdata + 0x50);
+        __int64 scriptptr = *reinterpret_cast<uintptr_t*>(userdata + 0x50); // if doesnt work try x60
 
         if (scriptptr > 0)
-            Roblox::PushInstancescript(L, reinterpret_cast<__int64*>(userdata + 0x50));
+            Roblox::PushInstancescript(L, reinterpret_cast<__int64*>(userdata + 0x50)); same ehre
         else
             lua_pushnil(L);
 
@@ -486,4 +486,5 @@ namespace Script
         Utils::AddFunction(L, "getscripts", getscripts);
         Utils::AddFunction(L, "getloadedmodules", getloadedmodules1);
     }
+
 }
