@@ -56,10 +56,9 @@ void rbx::render::render_hooks() {
     uintptr_t JobsStart = 0;
     uintptr_t JobsEnd = 0;
 
-    // Using simple arithmetic to avoid object unwinding issues
     if (!SafeReadPtr(SchedulerPtr + Offsets::Scripts::JobStart, JobsStart) ||
         !SafeReadPtr(SchedulerPtr + Offsets::Scripts::JobStart + sizeof(void*), JobsEnd)) {
-        Roblox::Print(3, "CRASH PREVENTED: Failed to read Job pointers");
+        Roblox::Print(3, "CRASH SAVE: Failed to read Job pointers");
         return;
     }
 
@@ -86,8 +85,8 @@ void rbx::render::render_hooks() {
         return;
     }
 
-    // From here on, we are dealing with COM objects (Swapchain), 
-    // which usually require standard HRESULT checks rather than SEH.
+    // From here on, we are touching the COM objects (Swapchain)
+    // which usually require standard HRESULT checks rather than SEH
     swap_chain = *reinterpret_cast<IDXGISwapChain**>(rbx_device + Offsets::render::Swapchain);
     if (!swap_chain) {
         Roblox::Print(3, "Error: SwapChain is null");
@@ -213,4 +212,5 @@ bool rbx::render::imgui_init() {
 
 void rbx::render::init() {
     render_hooks();
+
 }
