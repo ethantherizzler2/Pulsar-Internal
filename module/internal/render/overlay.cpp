@@ -15,7 +15,7 @@
 static bool debuggerOpen = false;
 static bool robloxSuspended = false;
 static HANDLE hRobloxMainThread = nullptr;
-static bool consoleEnabled = false;   // ❗ START DISABLED
+static bool consoleEnabled = false;   
 static bool consoleWasEnabled = false;
 static bool consoleConnected = false;
 
@@ -230,4 +230,5 @@ void rbx::c_gui::draw(bool* visible)
 
     ImGui::End();
     ImGui::PopStyleVar();
+
 }
