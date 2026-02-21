@@ -15,7 +15,7 @@ The repository does not include the Crypto++ folder because of its large size.
 
 You can download it here:
 
-> https://gofile.io/d/lTIPSf
+> https://gofile.io/d/M2kUHh
 
 After downloading place the folder inside:
 dependencies/
