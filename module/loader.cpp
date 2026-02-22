@@ -16,7 +16,7 @@ void MainThread()
 {
 	MessageBoxA(NULL, "Module Loaded 0", "Success", MB_OK | MB_ICONINFORMATION);
 	Logger::info("> Initializing Crash handler");
-    AdvancedGuard::Init();
+    veh::Init();
 	Logger::info("> Crash handler initialized");
     Logger::info("> Starting Local server");
     server::Initialize();
