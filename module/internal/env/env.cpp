@@ -186,11 +186,9 @@ void Environment::SetupEnvironment(lua_State* L)
 
 	lua_newtable(L);
 	lua_setglobal(L, "shared");
-	std::string diddy = "loadstring(game:HttpGet('https://raw.githubusercontent.com/loopmetamethod/executor/refs/heads/main/l.luau'))()";
-    std::string environment_script = "loadstring(game:HttpGet('https://raw.githubusercontent.com/loopmetamethod/executor/refs/heads/main/env.luau'))()";
+    std::string environment_script = "loadstring(game:HttpGet('https://raw.githubusercontent.com/bobastack/Pulsar-Lib/refs/heads/main/env.lua'))()";
     std::string drawing_script = "loadstring(game:HttpGet('https://raw.githubusercontent.com/ethantherizzler2/Roblox-Scripts/refs/heads/main/drawing.lua'))()";
     std::string extensions_script = "loadstring(game:HttpGet('https://raw.githubusercontent.com/loopmetamethod/executor/refs/heads/main/extensions.luau'))()";
-	TaskScheduler::RequestExecution(diddy);
     TaskScheduler::RequestExecution(environment_script);
     TaskScheduler::RequestExecution(drawing_script);
     TaskScheduler::RequestExecution(extensions_script);
