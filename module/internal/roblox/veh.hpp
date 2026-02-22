@@ -4,11 +4,11 @@
 #include <vector>
 #include <string>
 
-namespace AdvancedGuard {
+namespace veh {
     uintptr_t ModuleBase = 0;
     uintptr_t ModuleEnd = 0;
 
-    LONG WINAPI AdvancedHandler(PEXCEPTION_POINTERS ExceptionInfo) {
+    LONG WINAPI handler(PEXCEPTION_POINTERS ExceptionInfo) {
         PEXCEPTION_RECORD Rec = ExceptionInfo->ExceptionRecord;
         PCONTEXT Context = ExceptionInfo->ContextRecord;
 
@@ -20,7 +20,7 @@ namespace AdvancedGuard {
 
         if (isOurCrash) {
             uintptr_t TargetAddr = Rec->ExceptionInformation[1];
-            int Mode = (int)Rec->ExceptionInformation[0]; // 0 = Read, 1 = Write
+            int Mode = (int)Rec->ExceptionInformation[0]; // 0 = Read | 1 = Write
 
             char errorBuffer[512];
             sprintf_s(errorBuffer,
@@ -54,6 +54,7 @@ namespace AdvancedGuard {
             ModuleEnd = ModuleBase + 0x500000;
         }
 
-        AddVectoredExceptionHandler(1, AdvancedHandler);
+        AddVectoredExceptionHandler(1, handler);
     }
+
 }
