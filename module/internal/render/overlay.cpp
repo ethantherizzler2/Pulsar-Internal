@@ -113,7 +113,7 @@ void rbx::c_gui::draw(bool* visible)
 
             if (consoleEnabled)
             {
-				MessageBoxA(nullptr, "Hello Console currently doesn't work you have to wait for next update..", "Eclipse", MB_OK | MB_ICONINFORMATION);  
+				MessageBoxA(nullptr, "Hello Console currently doesn't work you have to wait for next update..", "Pulsar", MB_OK | MB_ICONINFORMATION);  
 
             }
             else
@@ -232,3 +232,4 @@ void rbx::c_gui::draw(bool* visible)
     ImGui::PopStyleVar();
 
 }
+
