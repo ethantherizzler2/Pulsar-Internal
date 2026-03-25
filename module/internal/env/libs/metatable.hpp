@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <Windows.h>
 #include <lstate.h>
@@ -38,6 +38,20 @@ namespace Metatable
         luaL_checktype(L, 1, LUA_TTABLE);
         luaL_checktype(L, 2, LUA_TBOOLEAN);
         lua_setreadonly(L, 1, lua_toboolean(L, 2));
+        return 0;
+    }
+
+    int makereadonly(lua_State* L)
+    {
+        luaL_checktype(L, 1, LUA_TTABLE);
+        lua_setreadonly(L, 1, 1);
+        return 0;
+    }
+
+    int makewriteable(lua_State* L)
+    {
+        luaL_checktype(L, 1, LUA_TTABLE);
+        lua_setreadonly(L, 1, 0);
         return 0;
     }
 
@@ -249,6 +263,8 @@ namespace Metatable
         Utils::AddFunction(L, "getnamecallmethod", getnamecallmethod);
         Utils::AddFunction(L, "setnamecallmethod", setnamecallmethod);
         Utils::AddFunction(L, "setreadonly", setreadonly);
+        Utils::AddFunction(L, "makereadonly", makereadonly);
+        Utils::AddFunction(L, "makewriteable", makewriteable);
         Utils::AddFunction(L, "isreadonly", isreadonly);
     }
 }

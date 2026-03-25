@@ -507,6 +507,8 @@ namespace Crypt
         Utils::AddTableFunction(L, "base64decode", base64decode);
         Utils::AddTableFunction(L, "base64_encode", base64encode);
         Utils::AddTableFunction(L, "base64_decode", base64decode);
+        Utils::AddTableFunction(L, "encodebase64", base64encode);
+        Utils::AddTableFunction(L, "decodebase64", base64decode);
         Utils::AddTableFunction(L, "encrypt", crypt_encrypt);
         Utils::AddTableFunction(L, "decrypt", crypt_decrypt);
         Utils::AddTableFunction(L, "generatebytes", generatebytes);
@@ -528,6 +530,8 @@ namespace Crypt
         Utils::AddFunction(L, "getfunctionhash", getfunctionhash);
         Utils::AddFunction(L, "base64_encode", base64encode);
         Utils::AddFunction(L, "base64_decode", base64decode);
+        Utils::AddFunction(L, "encodebase64", base64encode);
+        Utils::AddFunction(L, "decodebase64", base64decode);
         Utils::AddFunction(L, "base64encode", base64encode);
         Utils::AddFunction(L, "base64decode", base64decode);
         Utils::AddFunction(L, "lz4compress", lz4compress);

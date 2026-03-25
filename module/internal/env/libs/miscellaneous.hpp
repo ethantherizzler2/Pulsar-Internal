@@ -444,22 +444,51 @@ namespace Miscellaneous
     {
         Utils::AddFunction(L, "identifyexecutor", identifyexecutor);
         Utils::AddFunction(L, "getexecutorname", getexecutorname);
-		Utils::AddFunction(L, "setthreadidentity", setthreadidentity); // littel fixes needed here, will do later
-		Utils::AddFunction(L, "getthreadidentity", getthreadidentity); // littel fixes needed here, will do later
+        Utils::AddFunction(L, "whatexecutor", identifyexecutor);
+
+		// littel fixes needed here, will do later
+        Utils::AddFunction(L, "setthreadidentity", setthreadidentity);
+        Utils::AddFunction(L, "setidentity", setthreadidentity);
+        Utils::AddFunction(L, "setthreadcontext", setthreadidentity);
+        Utils::AddFunction(L, "setcontext", setthreadidentity);
+        Utils::AddFunction(L, "setthreadcaps", setthreadidentity);
+
+		// littel fixes needed here, will do later
+		Utils::AddFunction(L, "getthreadidentity", getthreadidentity);
+		Utils::AddFunction(L, "getthreadcontext", getthreadidentity);
+		Utils::AddFunction(L, "getidentity", getthreadidentity);
+		Utils::AddFunction(L, "getcontext", getthreadidentity);
+		Utils::AddFunction(L, "getthreadcaps", getthreadidentity);
+
+        Utils::AddFunction(L, "checkcaller", checkcaller);
+        Utils::AddFunction(L, "isownthread", checkcaller);
+
 		Utils::AddFunction(L, "info", info);
-		Utils::AddFunction(L, "saveinstance", gethui);
+		Utils::AddFunction(L, "saveinstance", saveinstance);
+        
+        Utils::AddFunction(L, "gethui", gethui);
         Utils::AddFunction(L, "getgenv", getgenv);
         Utils::AddFunction(L, "getrenv", getrenv);
         Utils::AddFunction(L, "getmenv", getmenv);
         Utils::AddFunction(L, "gettenv", gettenv);
         Utils::AddFunction(L, "getsenv", getsenv);
         Utils::AddFunction(L, "getgc", getgc);
+
         Utils::AddFunction(L, "setfpscap", setfpscap);
+        Utils::AddFunction(L, "setfps", setfpscap);
+        Utils::AddFunction(L, "setfpslimit", setfpscap);
+        Utils::AddFunction(L, "setfpsmax", setfpscap);
+        Utils::AddFunction(L, "unlockfps", setfpscap);
+        Utils::AddFunction(L, "fpsunlock", setfpscap);
+
         Utils::AddFunction(L, "queue_on_teleport", queueonteleport);
         Utils::AddFunction(L, "queueonteleport", queueonteleport);
+        Utils::AddFunction(L, "addteleportscript", queueonteleport);
+        Utils::AddFunction(L, "addqueuescript", queueonteleport);
+
         Utils::AddFunction(L, "getactors", getactors);
-		Utils::AddFunction(L, "checkcaller", checkcaller);
-        Utils::AddFunction(L, "getregistry", getregistry);
+
         Utils::AddFunction(L, "getreg", getregistry);
+        Utils::AddFunction(L, "getregistry", getregistry);
     }
 }

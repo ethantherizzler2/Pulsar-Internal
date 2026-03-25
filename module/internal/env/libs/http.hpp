@@ -114,7 +114,7 @@ namespace Http
         }
 
         cpr::Header Headers;
-        Headers.insert({ "User-Agent", "Eclipse" });
+        Headers.insert({ "User-Agent", "Pulsar" });
         Headers.insert({ "Accept", "*/*" });
 
         try {
@@ -166,7 +166,7 @@ namespace Http
         SessionIdJson["PlaceId"] = PlaceId;
 
         cpr::Header Headers;
-        Headers.insert({ "User-Agent", "Eclipse" });
+        Headers.insert({ "User-Agent", "Pulsar" });
         Headers.insert({ "Roblox-Session-Id", SessionIdJson.dump() });
         Headers.insert({ "Roblox-Place-Id", PlaceId });
         Headers.insert({ "Roblox-Game-Id", GameId });
@@ -261,7 +261,7 @@ namespace Http
         SessionIdJson["PlaceId"] = PlaceId;
 
         cpr::Header Headers;
-        Headers.insert({ "User-Agent", "Eclipse" });
+        Headers.insert({ "User-Agent", "Pulsar" });
         Headers.insert({ "Content-Type", ContentType });
         Headers.insert({ "Roblox-Session-Id", SessionIdJson.dump() });
         Headers.insert({ "Accept", "*/*" });
@@ -399,7 +399,7 @@ namespace Http
         SessionIdJson["PlaceId"] = PlaceId;
 
         if (Headers.find("User-Agent") == Headers.end())
-            Headers["User-Agent"] = "Eclipse";
+            Headers["User-Agent"] = "Pulsar";
         if (Headers.find("Roblox-Session-Id") == Headers.end())
             Headers["Roblox-Session-Id"] = SessionIdJson.dump();
         if (Headers.find("Fingerprint") == Headers.end())
@@ -532,6 +532,7 @@ namespace Http
     {
         Utils::AddFunction(L, "request", request);
         Utils::AddFunction(L, "http_request", request);
+        Utils::AddFunction(L, "httprequest", HttpGet);
         Utils::AddFunction(L, "syn_request", request);
 
         lua_newtable(L);
