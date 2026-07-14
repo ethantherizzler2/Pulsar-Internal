@@ -1,21 +1,19 @@
 # Pulsar-Internal
 
-**Pulsar was created as a personal project to relearn internals from the ground up.**
-**This is for  who are new to internals can understand how things work.**
+**Pulsar was an personal project to relearn internals**
 
 # Stats
 - ~69% UNC
 
-- Working hookmetamethod and ect.
-- Beginner-friendly base
+- fixed few functions and added sum!
 
 # Dependencies
 
-The repository does not include the Crypto++ folder because of its large size.
+The repo does not include the Crypto++ folder because of large size
 
 You can download it here:
 
-> https://gofile.io/d/M2kUHh
+> https://gofile.io/d/M2kUHh [invaild]
 
 After downloading place the folder inside:
 dependencies/
